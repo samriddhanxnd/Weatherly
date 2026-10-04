@@ -1,0 +1,582 @@
+/* ==========================================
+   CSS Reset & Root Variables
+   ========================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg-gradient: linear-gradient(135deg, #2980b9, #2c3e50);
+    --card-bg: rgba(255, 255, 255, 0.12);
+    --card-border: rgba(255, 255, 255, 0.2);
+    --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.8);
+    --accent-color: #f39c12;
+    --accent-glow: rgba(243, 156, 18, 0.4);
+    --transition-speed: 0.4s ease;
+}
+
+/* Dark Mode Override when toggled */
+body.dark-mode {
+    --card-bg: rgba(15, 23, 42, 0.55);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    color: var(--text-primary);
+    background: var(--bg-gradient);
+    transition: background var(--transition-speed), color var(--transition-speed);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ==========================================
+   Dynamic Weather Background Themes
+   ========================================== */
+body.weather-sunny {
+    --bg-gradient: linear-gradient(135deg, #1fa2ff, #12d8fa, #a6ffcb);
+}
+body.weather-rainy {
+    --bg-gradient: linear-gradient(135deg, #373b44, #4286f4);
+}
+body.weather-stormy {
+    --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
+body.weather-cloudy {
+    --bg-gradient: linear-gradient(135deg, #606c88, #3f4c6b);
+}
+body.weather-foggy {
+    --bg-gradient: linear-gradient(135deg, #757f9a, #d7dde8);
+}
+body.weather-night {
+    --bg-gradient: linear-gradient(135deg, #0f172a, #1e1b4b, #311042);
+}
+
+/* Dynamic background subtle particle effects container */
+.dynamic-bg-effects {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+/* Raindrop effect */
+.weather-rainy .drop, .weather-stormy .drop {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    width: 1px;
+    height: 20px;
+    opacity: 0.6;
+    animation: fall linear infinite;
+}
+@keyframes fall {
+    0% { transform: translateY(-20px); }
+    100% { transform: translateY(105vh); }
+}
+
+/* Lightning flash for stormy */
+body.weather-stormy::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    animation: lightning 8s infinite;
+}
+@keyframes lightning {
+    0%, 90%, 94%, 98% { opacity: 0; }
+    91%, 95% { opacity: 0.6; }
+}
+
+/* ==========================================
+   App Container & Glassmorphic Cards
+   ========================================== */
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    position: relative;
+    z-index: 2;
+}
+
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    padding: 24px;
+    transition: transform 0.3s ease, background 0.3s ease, border 0.3s ease;
+}
+
+.card:hover {
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* ==========================================
+   Header & Search Bar
+   ========================================== */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo i {
+    font-size: 2rem;
+    color: var(--accent-color);
+    filter: drop-shadow(0 0 10px var(--accent-glow));
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border);
+    border-radius: 50px;
+    padding: 6px 6px 6px 18px;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+}
+
+.search-box:focus-within {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.search-box input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-family: 'Outfit', sans-serif;
+    width: 200px;
+}
+
+.search-box input::placeholder {
+    color: var(--text-secondary);
+}
+
+.search-box button {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1rem;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.search-box button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--accent-color);
+}
+
+.theme-toggle {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Theme icon visibility based on body class */
+body.dark-mode .light-icon { display: block; }
+body.dark-mode .dark-icon { display: none; }
+body:not(.dark-mode) .light-icon { display: none; }
+body:not(.dark-mode) .dark-icon { display: block; }
+
+/* ==========================================
+   Notifications, Loading & Errors
+   ========================================== */
+.error-banner {
+    background: rgba(239, 68, 68, 0.85);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+    animation: fadeIn 0.3s ease;
+}
+
+.loading-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 16px auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-state p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================
+   Dashboard Layout
+   ========================================== */
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    animation: fadeIn 0.5s ease;
+}
+
+.current-section {
+    display: grid;
+    grid-template-columns: 1.2fr 1.8fr;
+    gap: 24px;
+}
+
+@media (max-width: 900px) {
+    .current-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Current Weather Card */
+.current-weather-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.location-header h2 {
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.location-header span {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.weather-main-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 24px 0;
+}
+
+.temp-box {
+    font-size: 4.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.temp-box .unit {
+    font-size: 2.5rem;
+    vertical-align: super;
+}
+
+.condition-box {
+    text-align: right;
+}
+
+.condition-box .weather-icon {
+    font-size: 3.5rem;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+    filter: drop-shadow(0 0 12px var(--accent-glow));
+}
+
+.condition-box h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.feels-like {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* Highlights Grid */
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.highlight-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.highlight-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.highlight-title i {
+    color: var(--accent-color);
+}
+
+.highlight-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 12px 0 4px 0;
+}
+
+.highlight-desc {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+/* ==========================================
+   Forecast Section
+   ========================================== */
+.forecast-section {
+    display: grid;
+    grid-template-columns: 1.2fr 1.8fr;
+    gap: 24px;
+}
+
+@media (max-width: 900px) {
+    .forecast-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+.forecast-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.forecast-card h3 i {
+    color: var(--accent-color);
+}
+
+/* Daily Forecast Container */
+.daily-forecast-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.daily-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.daily-item:hover, .daily-item.active {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: var(--accent-color);
+    transform: translateX(4px);
+}
+
+.daily-day {
+    font-weight: 600;
+    width: 70px;
+}
+
+.daily-icon {
+    font-size: 1.4rem;
+    color: var(--accent-color);
+}
+
+.daily-temps {
+    display: flex;
+    gap: 16px;
+    font-weight: 500;
+}
+
+.daily-max {
+    font-weight: 700;
+}
+
+.daily-min {
+    color: var(--text-secondary);
+}
+
+/* Hourly Forecast Container */
+.hourly-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+.hourly-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-top: 2px;
+}
+
+.hourly-scroll-container {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.hourly-scroll-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+.hourly-scroll-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+.hourly-item {
+    min-width: 85px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 16px 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.hourly-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-4px);
+}
+
+.hourly-time {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.hourly-icon {
+    font-size: 1.6rem;
+    color: var(--accent-color);
+}
+
+.hourly-temp {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    .app-container {
+        padding: 12px;
+    }
+    .app-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .header-controls {
+        justify-content: space-between;
+    }
+    .search-box {
+        flex: 1;
+    }
+    .search-box input {
+        width: 100%;
+    }
+    .temp-box {
+        font-size: 3.5rem;
+    }
+    .highlights-grid {
+        grid-template-columns: 1fr;
+    }
+}

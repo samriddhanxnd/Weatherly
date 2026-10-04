@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weatherly — Modern Weather Forecast</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="weather-sunny">
+    <!-- Background Dynamic Effects Container -->
+    <div class="dynamic-bg-effects" id="dynamicBgEffects"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-solid fa-cloud-sun-rain"></i>
+                <h1>Weatherly</h1>
+            </div>
+            <div class="header-controls">
+                <div class="search-box">
+                    <input type="text" id="cityInput" placeholder="Search city..." autocomplete="off">
+                    <button id="searchBtn" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button id="geoBtn" title="Use Current Location"><i class="fa-solid fa-location-crosshairs"></i></button>
+                </div>
+                <button id="themeToggle" class="theme-toggle" title="Toggle Light/Dark Mode">
+                    <i class="fa-solid fa-sun light-icon"></i>
+                    <i class="fa-solid fa-moon dark-icon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Error / Notification Banner -->
+        <div id="errorBanner" class="error-banner hidden">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span id="errorMessage">City not found. Please try again.</span>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="loading-state hidden">
+            <div class="spinner"></div>
+            <p>Fetching weather data...</p>
+        </div>
+
+        <!-- Main Dashboard Content -->
+        <main class="dashboard hidden" id="dashboard">
+            <!-- Top Section: Current Weather & Highlights -->
+            <section class="current-section">
+                <!-- Current Weather Card -->
+                <div class="card current-weather-card">
+                    <div class="location-header">
+                        <h2 id="cityName">New Delhi, IN</h2>
+                        <span id="currentDate">Sunday, Oct 4, 2026</span>
+                    </div>
+                    <div class="weather-main-info">
+                        <div class="temp-box">
+                            <span id="currentTemp">28</span><span class="unit">°C</span>
+                        </div>
+                        <div class="condition-box">
+                            <div id="weatherIconContainer">
+                                <i class="fa-solid fa-sun weather-icon" id="weatherIcon"></i>
+                            </div>
+                            <h3 id="weatherCondition">Clear Sky</h3>
+                        </div>
+                    </div>
+                    <p class="feels-like">Feels like <span id="feelsLike">30</span>°C</p>
+                </div>
+
+                <!-- Weather Highlights Grid -->
+                <div class="highlights-grid">
+                    <div class="card highlight-card">
+                        <div class="highlight-title">
+                            <i class="fa-solid fa-droplet"></i>
+                            <span>Humidity</span>
+                        </div>
+                        <p class="highlight-value" id="humidityVal">42%</p>
+                        <span class="highlight-desc" id="humidityDesc">Comfortable humidity level</span>
+                    </div>
+                    <div class="card highlight-card">
+                        <div class="highlight-title">
+                            <i class="fa-solid fa-wind"></i>
+                            <span>Wind Speed</span>
+                        </div>
+                        <p class="highlight-value" id="windVal">12 km/h</p>
+                        <span class="highlight-desc" id="windDesc">Gentle breeze</span>
+                    </div>
+                    <div class="card highlight-card">
+                        <div class="highlight-title">
+                            <i class="fa-solid fa-eye"></i>
+                            <span>Visibility</span>
+                        </div>
+                        <p class="highlight-value" id="visibilityVal">10 km</p>
+                        <span class="highlight-desc" id="visibilityDesc">Clear view</span>
+                    </div>
+                    <div class="card highlight-card">
+                        <div class="highlight-title">
+                            <i class="fa-solid fa-gauge-high"></i>
+                            <span>Pressure</span>
+                        </div>
+                        <p class="highlight-value" id="pressureVal">1013 hPa</p>
+                        <span class="highlight-desc" id="pressureDesc">Normal pressure</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom Section: Daily & Hourly Forecast -->
+            <section class="forecast-section">
+                <!-- 5-Day Daily Forecast -->
+                <div class="card forecast-card">
+                    <h3><i class="fa-solid fa-calendar-days"></i> 5-Day Forecast</h3>
+                    <div class="daily-forecast-container" id="dailyForecastContainer">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Hourly Forecast -->
+                <div class="card forecast-card">
+                    <div class="hourly-header">
+                        <h3 id="hourlyTitle"><i class="fa-solid fa-clock"></i> Hourly Forecast — Today</h3>
+                        <span class="hourly-subtitle">Click any day above to view its hourly forecast</span>
+                    </div>
+                    <div class="hourly-scroll-container" id="hourlyScrollContainer">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Script File -->
+    <script src="script.js"></script>
+</body>
+</html>
