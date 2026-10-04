@@ -8,9 +8,7 @@
  * 2. Paste your API key in the API_KEY constant below.
  * ============================================================================
  */
-
-const API_KEY = "a2fa90286e5d736c2576b8794388f925"; // <-- REPLACE WITH YOUR OPENWEATHERMAP API KEY
-
+const API_KEY = "ADD_YOUR_API_KEY"; // <-- REPLACE WITH YOUR OPENWEATHERMAP API KEY
 // DOM Elements
 const cityInput = document.getElementById("cityInput");
 const searchBtn = document.getElementById("searchBtn");
